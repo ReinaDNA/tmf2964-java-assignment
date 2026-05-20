@@ -3,7 +3,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Encoded {
+public class Encoded extends JFrame {
+    private JTextField inputField;
+    private JButton encodeButton;
+    private JTextArea displayArea;
+    
     private String inputText;
     private int charCount;
     private String resultText;
@@ -11,7 +15,11 @@ public class Encoded {
 
     //Constructor
     public Encoded(){
-
+        // Setup the Swing Window
+        setTitle("Group Cipher Encoder");
+        setSize(450, 350);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
     }
 
     public Encoded(String inputText){
