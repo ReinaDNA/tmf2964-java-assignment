@@ -1,8 +1,13 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class Encoded {
     private String inputText;
     private int charCount;
     private String resultText;
-    private final String GroupID;
+    private final String GroupID = "G02/CS-G15";
 
     //Constructor
     public Encoded(){
