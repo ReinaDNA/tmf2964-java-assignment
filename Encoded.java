@@ -27,6 +27,12 @@ public class Encoded extends JFrame {
         displayArea = new JTextArea(8, 35);
         displayArea.setEditable(false);
         displayArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+
+        // Add components to the frame
+        add(new JLabel("Enter text (lowercase letters, numbers, spaces):"));
+        add(inputField);
+        add(encodeButton);
+        add(new JScrollPane(displayArea));
     }
 
     public Encoded(String inputText){
