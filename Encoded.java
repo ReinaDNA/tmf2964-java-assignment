@@ -85,6 +85,15 @@ public class Encoded extends JFrame {
         int finalShift = groupShift + this.charCount;
         return finalShift;
     }
+    public int countCharacters(String inputText) {
+        int count = 0;
+        for (int i = 0; i < inputText.length(); i++) {
+            if (inputText.charAt(i) != ' ') {
+                count++;
+            }
+        }
+        return count;
+    }
 
     public String applyCipher(String inputText, int shift){
         String encryptedText = "";
