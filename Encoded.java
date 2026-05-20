@@ -16,10 +16,17 @@ public class Encoded extends JFrame {
     //Constructor
     public Encoded(){
         // Setup the Swing Window
-        setTitle("Group Cipher Encoder");
+        setTitle("Group G02/CS-G15 Cipher Encoder");
         setSize(450, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
+
+        // Initialize UI Components
+        inputField = new JTextField(25);
+        encodeButton = new JButton("Encode String");
+        displayArea = new JTextArea(8, 35);
+        displayArea.setEditable(false);
+        displayArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
     }
 
     public Encoded(String inputText){
