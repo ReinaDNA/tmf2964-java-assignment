@@ -1,7 +1,8 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.util.*;
 
 public class Encoded extends JFrame {
     private JTextField inputField;
@@ -81,7 +82,16 @@ public class Encoded extends JFrame {
     }
 
     public boolean checkStringValidity(String inputText){
-        // Maliska's part
+        boolean onlyValidAlphanumeric = inputText.matches("[a-z0-9\s]+"); // See if it matches any of the a to z, 0 to 9 and whitespace
+        // If the text field is not an empty field
+        if (!inputText.isEmpty()) {
+            if (onlyValidAlphanumeric) {
+                return true;
+            } 
+        // If the text field is empty or null
+        } else if (inputText.isEmpty() || (inputText == null)) {
+           return false;
+        } 
         return false;
     }
 
