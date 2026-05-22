@@ -10,7 +10,7 @@ public class Encoded extends JFrame {
     
     private String inputText;
     private int charCount;
-    private String resultText;
+    private String resultText = "";
     private final String GroupID = "G02/CS-G15";
 
     //Constructor - GUI setup
@@ -41,20 +41,20 @@ public class Encoded extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 
                 // Get whatever the user typed
-                String userInput = inputField.getText();
+                inputText = inputField.getText();
                 
                 // Create the Encoded object
                 Encoded encoder = new Encoded();
                 
                 // Use Maliska's method to check if it's valid
-                if (encoder.checkStringValidity(userInput) == false) {
+                if (encoder.checkStringValidity(inputText) == false) {
                     // Show a simple pop-up error
                     JOptionPane.showMessageDialog(null, "Invalid input! Use lowercase letters, digits, and spaces only.");
                 } else {
                     // If it is valid, use Thiveya and Zhi Jie's methods
-                    int count = encoder.countCharacters(userInput);
+                    int count = encoder.countCharacters(inputText);
                     int shift = encoder.generateShift();
-                    String result = encoder.applyCipher(userInput, shift);
+                    String result = encoder.applyCipher(inputText, shift);
                     
                     // Put the final text into the display area
                     displayArea.setText(
@@ -71,32 +71,27 @@ public class Encoded extends JFrame {
         this.inputText = inputText;
     }
 
-    public int countCharacters(String inputText){
-        return 0;
+     public int countCharacters(String inputText) {
+        for (int i = 0; i < inputText.length(); i++) {
+            if (inputText.charAt(i) != ' ') {
+                charCount++;
+            }
+        }
+        return charCount;
     }
 
     public boolean checkStringValidity(String inputText){
+        // Maliska's part
         return false;
     }
 
     public int generateShift(){
-        this.countCharacters(inputText);
         int groupShift = Math.abs((this.GroupID.hashCode() % 10)) + 1;
-        int finalShift = groupShift + this.charCount;
+        int finalShift = groupShift + charCount;
         return finalShift;
     }
-    public int countCharacters(String inputText) {
-        int count = 0;
-        for (int i = 0; i < inputText.length(); i++) {
-            if (inputText.charAt(i) != ' ') {
-                count++;
-            }
-        }
-        return count;
-    }
-
+   
     public String applyCipher(String inputText, int shift){
-        String encryptedText = "";
 
         for(int i=0; i<inputText.length(); i++){
             
@@ -105,20 +100,19 @@ public class Encoded extends JFrame {
             if(Character.isLowerCase(c)){
                 char base = 'a';
                 int shiftedPosition = (c - base + shift) % 26 + base;
-                encryptedText += (char)(shiftedPosition);
+                resultText += (char)(shiftedPosition);
             }else if(Character.isDigit(c)){
                 char base = '0';
                 int shiftedPosition = (c - base + shift) % 10 + base;
-                encryptedText += (char)(shiftedPosition);
+                resultText += (char)(shiftedPosition);
             }else{
                 // The char is a white space, no encryption needed
-                encryptedText += c;
+                resultText += c;
                 continue;
             }
         }
         
-        this.resultText = encryptedText;
-        return encryptedText;
+        return resultText;
     }
 
     public static void main(String[] args) {
