@@ -15,7 +15,7 @@ public class Encoded extends JFrame {
     private final String GroupID = "G02/CS-G15";
 
     //Constructor - GUI setup
-    //Contributor: Arif Amirul Aiman Bin Marzuki
+    //Contributor: Arif Amirul Aiman Bin Marzuki (83282)
     public Encoded(){
         // Setup the Swing Window
         setTitle("Group G02/CS-G15 Cipher Encoder");
@@ -31,7 +31,7 @@ public class Encoded extends JFrame {
         displayArea.setEditable(false); // So the user can't type in the result box
         
         // 3. Add them to the window
-        add(new JLabel("Enter text (lowercase & numbers):"));
+        add(new JLabel("Enter text (lowercase, numbers & spaces only):"));
         add(inputField);
         add(encodeButton);
         add(new JScrollPane(displayArea));
@@ -44,18 +44,16 @@ public class Encoded extends JFrame {
                 // Get whatever the user typed
                 inputText = inputField.getText();
                 
-                // Create the Encoded object
-                Encoded encoder = new Encoded();
-                
                 // Use Maliska's method to check if it's valid
-                if (encoder.checkStringValidity(inputText) == false) {
+                if (!checkStringValidity(inputText)) {
                     // Show a simple pop-up error
                     JOptionPane.showMessageDialog(null, "Invalid input! Use lowercase letters, digits, and spaces only.");
+                    
                 } else {
                     // If it is valid, use Thiveya and Zhi Jie's methods
-                    int count = encoder.countCharacters(inputText);
-                    int shift = encoder.generateShift();
-                    String result = encoder.applyCipher(inputText, shift);
+                    int count = countCharacters(inputText);
+                    int shift = generateShift();
+                    String result = applyCipher(inputText, shift);
                     
                     // Put the final text into the display area
                     displayArea.setText(
@@ -68,11 +66,17 @@ public class Encoded extends JFrame {
         });
     }
 
+    // Constructor with predefined input string
+    //Contributor: Arif Amirul Aiman Bin Marzuki (83282)
     public Encoded(String inputText){
         this.inputText = inputText;
     }
 
+    // Method for counting non-space characters
+    // Contributor: Thiveya Shree a/p Baskaran (106564)
      public int countCharacters(String inputText) {
+        // Resets the variable to original state
+        charCount = 0;
         for (int i = 0; i < inputText.length(); i++) {
             if (inputText.charAt(i) != ' ') {
                 charCount++;
@@ -81,6 +85,8 @@ public class Encoded extends JFrame {
         return charCount;
     }
 
+    // Method for input validation
+    // Contributor: Mohamad Ikhmal Iskandar bin Mohd Ibrahim  (105016)
     public boolean checkStringValidity(String inputText){
         boolean onlyValidAlphanumeric = inputText.matches("[a-z0-9\s]+"); // See if it matches any of the a to z, 0 to 9 and whitespace
         // If the text field is not an empty field
@@ -89,32 +95,39 @@ public class Encoded extends JFrame {
                 return true;
             } 
         // If the text field is empty or null
-        } else if (inputText.isEmpty() || (inputText == null)) {
+        } else if ((inputText == null) || inputText.isEmpty()) {
            return false;
         } 
         return false;
     }
 
+    // Method for generating shift for encoding
+    // Contributor: Seng Zhi Jie (106256)
     public int generateShift(){
-        int groupShift = Math.abs((this.GroupID.hashCode() % 10)) + 1;
-        int finalShift = groupShift + charCount;
+        int groupShift = Math.abs((this.GroupID.hashCode() % 10)) + 1; // Generate hash between 1 to 10
+        int finalShift = groupShift + charCount; // Calculate final shift
         return finalShift;
     }
    
+    // Method for encoding input text
+    // Contributor: Seng Zhi Jie (106256)
     public String applyCipher(String inputText, int shift){
-
+        // Reset the result text
+        resultText = "";
         for(int i=0; i<inputText.length(); i++){
-            
+            // Iterating through the string to apply encryption
             char c = inputText.charAt(i);
             
+            // Letters encryption
             if(Character.isLowerCase(c)){
                 char base = 'a';
-                int shiftedPosition = (c - base + shift) % 26 + base;
-                resultText += (char)(shiftedPosition);
+                int shiftedPosition = (c - base + shift) % 26 + base; // Encryption formula for letters
+                resultText += (char)(shiftedPosition); // Revert back to chart and add it into result
             }else if(Character.isDigit(c)){
+                // Numbers encryption
                 char base = '0';
-                int shiftedPosition = (c - base + shift) % 10 + base;
-                resultText += (char)(shiftedPosition);
+                int shiftedPosition = (c - base + shift) % 10 + base; // Encryption formula for numbers
+                resultText += (char)(shiftedPosition); // Revert back to char and add it into result 
             }else{
                 // The char is a white space, no encryption needed
                 resultText += c;
@@ -125,8 +138,5 @@ public class Encoded extends JFrame {
         return resultText;
     }
 
-    public static void main(String[] args) {
-        Encoded myWindow = new Encoded();
-        myWindow.setVisible(true);
-    }
+    
 }
