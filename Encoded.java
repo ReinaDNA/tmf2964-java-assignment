@@ -14,7 +14,7 @@ public class Encoded extends JFrame {
     private final String GroupID = "G02/CS-G15";
 
     //Constructor - GUI setup
-    //Contributor: Arif Amirul Aiman Bin Marzuki
+    //Contributor: Arif Amirul Aiman Bin Marzuki (83282)
     public Encoded(){
         // Setup the Swing Window
         setTitle("Group G02/CS-G15 Cipher Encoder");
@@ -43,18 +43,15 @@ public class Encoded extends JFrame {
                 // Get whatever the user typed
                 inputText = inputField.getText();
                 
-                // Create the Encoded object
-                Encoded encoder = new Encoded();
-                
                 // Use Maliska's method to check if it's valid
-                if (encoder.checkStringValidity(inputText) == false) {
+                if (!checkStringValidity(inputText)) {
                     // Show a simple pop-up error
                     JOptionPane.showMessageDialog(null, "Invalid input! Use lowercase letters, digits, and spaces only.");
                 } else {
                     // If it is valid, use Thiveya and Zhi Jie's methods
-                    int count = encoder.countCharacters(inputText);
-                    int shift = encoder.generateShift();
-                    String result = encoder.applyCipher(inputText, shift);
+                    int count = countCharacters(inputText);
+                    int shift = generateShift();
+                    String result = applyCipher(inputText, shift);
                     
                     // Put the final text into the display area
                     displayArea.setText(
@@ -67,11 +64,14 @@ public class Encoded extends JFrame {
         });
     }
 
+    // Constructor with predefined input string
     public Encoded(String inputText){
         this.inputText = inputText;
     }
 
      public int countCharacters(String inputText) {
+        // Resets the variable to original state
+        charCount = 0;
         for (int i = 0; i < inputText.length(); i++) {
             if (inputText.charAt(i) != ' ') {
                 charCount++;
@@ -115,8 +115,5 @@ public class Encoded extends JFrame {
         return resultText;
     }
 
-    public static void main(String[] args) {
-        Encoded myWindow = new Encoded();
-        myWindow.setVisible(true);
-    }
+    
 }
